@@ -129,20 +129,25 @@ jps
 
 
 ---
-hadoop fs 명령어---
-hadoop fs -ls /user/root/output
-
-hadoop fs -mkdir /tmp
-
-hadoop fs -mkdir -p /user/taeho/hadoop_edu/test #p가 있으면 상위 폴도 모두 생성
-
-hadoop fs -ls /
+hadoop fs 명령어
+```
+# 파일 및 디렉토리 확인
+hadoop fs -ls /user/
+# 모든 자식 디렉토리 및 파일 확인
 hadoop fs -ls -R /
 
+# directory 생성
+hadoop fs -mkdir /user
+
+# 만약 상위 디렉토리가 존재하지 않으면 같이 생성
+hadoop fs -mkdir -p /user/taeho/hadoop_edu/test 
+
+# local에서 hdfs의 input 디렉토리로 파일 복사
 hadoop fs -put etc/hadoop/*.xml input
+```
 
+--- 
+### jps 때 datanode 실행 안될 때
+- tmp 초기화
+<https://yeo0.tistory.com/entry/Solution-Namenode-Format-%ED%9B%84-Datanode-%EA%B0%80-%EC%8B%A4%ED%96%89%EB%90%98%EC%A7%80-%EC%95%8A%EC%9D%84-%EB%95%8C-Datanode-process-is-not-runni>
 
---- jps 때 datanode 실행 안될 때---
-https://yeo0.tistory.com/entry/Solution-Namenode-Format-%ED%9B%84-Datanode-%EA%B0%80-%EC%8B%A4%ED%96%89%EB%90%98%EC%A7%80-%EC%95%8A%EC%9D%84-%EB%95%8C-Datanode-process-is-not-runni
-
-hadoop fs -mkdir -p /user/root
