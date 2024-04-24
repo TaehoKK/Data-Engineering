@@ -14,15 +14,18 @@ tar -xzvf apache-hive-3.1.3-bin.tar.gz
 - Hive 4.x |	Java 8
 ---
 ### hive 환경변수 설정
-hive-env.sh.template 파일 이름을 hive-env.sh로 변경
 ```
+# hive 디렉토리로 이동
 cd apache-hive-3.1.3-bin
+
+# hive-env.sh.template 파일 이름을 hive-env.sh로 변경
 mv conf/hive-env.sh.template conf/hive-env.sh
 ```
 
 
 hive-env.sh 파일에 하둡 홈 경로 설정
 ```
+g
 HADOOP_HOME=/Users/hongtebari/Platform/hadoop-3.3.0
 ```
 hive-site.xml 설정
