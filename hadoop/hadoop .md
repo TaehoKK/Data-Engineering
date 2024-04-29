@@ -118,6 +118,7 @@ namemode 초기화 및 HDFS 실행
 ```
 ./hadoop/bin/hdfs namenode -format
 ./hadoop/sbin/start-dfs.sh
+# 잘 안되면 start-all.sh 실행
 
 # node가 정상적으로 작동하는지 확인
 jps
