@@ -103,6 +103,9 @@ gedit ./hadoop-3.3.6/etc/hadoop/hdfs-site.xml
 자신의 lcoalhost에 ssh(secure shell)연결
 ```
 >ssh localhost
+
+# 종료
+>exit 
 ```
 
 ---
