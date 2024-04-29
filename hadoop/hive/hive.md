@@ -75,6 +75,19 @@ gedit /hive-site.xml
     </property>
 </configuration>
 ```
+javax.jdo.option.ConnectionURL: 
+- JDBC 연결 URL을 지정합니다. 이 경우 MySQL 데이터베이스의 주소 및 포트 번호가 포함되어 있습니다.
+- createDatabaseIfNotExist=true는 데이터베이스가 없는 경우 자동으로 생성하도록 지정합니다. serverTimezone=Asia/Seoul은 서버의 시간대를 지정합니다.
+- 
+javax.jdo.option.ConnectionDriverName:
+- JDBC 드라이버 클래스 이름을 지정합니다. 여기서는 MySQL의 JDBC 드라이버 클래스인 com.mysql.cj.jdbc.Driver를 사용합니다.
+javax.jdo.option.ConnectionUserName:
+- 데이터베이스에 연결할 사용자 이름을 지정합니다. 이 경우 사용자 이름은 hive입니다.
+- 
+javax.jdo.option.ConnectionPassword:
+- 데이터베이스에 연결할 때 사용되는 비밀번호를 지정합니다. 이 경우 비밀번호는 1234입니다.
+
+---
 
 #### hive guava 버전 확인
 ```
@@ -149,7 +162,7 @@ hdfs dfsadmin -safemode get
 >bin/hdfs dfs -chmod 777 /tmp/hive
 
 ```
-
+---
 #### HiveQL
 ```
 # 
