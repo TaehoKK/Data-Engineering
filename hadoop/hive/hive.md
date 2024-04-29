@@ -78,17 +78,20 @@ gedit /hive-site.xml
 
 #### hive guava 버전 확인
 ```
-ll $HIVE_HOME/lib| grep guav
-```
+>$HIVE_HOME/lib| grep guav
+
+# 결과
 -rw-r--r--  1 root staff  2308517 10월 19  2019 guava-19.0.jar
 -rw-r--r--  1 root staff   971309 10월 19  2019 jersey-guava-2.25.1.jar
+```
+```
+>$HADOOP_HOME/share/hadoop/common/lib | grep guav
 
-```
-ll $HADOOP_HOME/share/hadoop/common/lib | grep guav
-```
+# 결과
 -rw-r--r-- 1 hdfs hdfs 2747878  7월 29  2022 guava-27.0-jre.jar
 -rw-r--r-- 1 hdfs hdfs 3362359  7월 29  2022 hadoop-shaded-guava-1.1.1.jar
 -rw-r--r-- 1 hdfs hdfs    2199  7월 29  2022 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar
+```
 
 #### jdbc 설치
 ```
@@ -137,18 +140,23 @@ hdfs dfsadmin -safemode get
 ---
 #### directory 생성
 ```
-bin/hdfs dfs -mkdir -p /tmp/hive
-bin/hdfs dfs -mkdir -p /user/hive/warehouse
+>bin/hdfs dfs -mkdir -p /tmp/hive
+>bin/hdfs dfs -mkdir -p /user/hive/warehouse
 
 # 쓰기, 실행 권한 부여
-bin/hdfs dfs -chmod g+w /tmp
-bin/hdfs dfs -chmod g+w /user/hive/warehouse
-bin/hdfs dfs -chmod 777 /tmp/hive
+>bin/hdfs dfs -chmod g+w /tmp
+>bin/hdfs dfs -chmod g+w /user/hive/warehouse
+>bin/hdfs dfs -chmod 777 /tmp/hive
 
 ```
+
+#### HiveQL
 ```
-# 예시
+# 
 > hive
+show tables;
+
+
 CREATE TABLE employee (
     emp_id INT,
     emp_name STRING,
@@ -156,7 +164,7 @@ CREATE TABLE employee (
     emp_salary FLOAT
 );
 
-INSERT INTO employee VALUES
+INSERT INTO employ VALUES
 (1, 'John Doe', 'Engineering', 50000.00),
 (2, 'Jane Smith', 'Marketing', 60000.00),
 (3, 'Bob Johnson', 'Sales', 55000.00);
