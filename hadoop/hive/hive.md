@@ -122,7 +122,19 @@ $HIVE_HOME/bin/schematool -initSchema -dbType derby
 cd $HIVE_HOME/bin
 hive
 ```
+---
+- ERROR: Name node is in safe mode
+```
+# namemode의 safemode 끄기
+hdfs dfsadmin -safemode leave
 
+# namemode의 safemode 강제로 끄기
+hdfs dfsadmin -safemode forceExit
+
+# safe mode 확인
+hdfs dfsadmin -safemode get
+```
+---
 #### directory 생성
 ```
 bin/hdfs dfs -mkdir -p /tmp/hive
