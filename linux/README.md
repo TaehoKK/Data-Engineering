@@ -1,3 +1,14 @@
+window <-> linux 파일 이동
+```
+# cmd
+
+# window -> linux 
+scp 파일경로 root@192.168.111.100:/위치경로
+
+# linux -> window
+scp  root@192.168.111.100:/파일경로 위치경로
+```
+
 ```
 # 경로 확인
 pwd
