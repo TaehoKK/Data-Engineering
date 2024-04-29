@@ -135,6 +135,16 @@ Hadoop cluster의 web interface port
 - 새로운 클러스터 또는 구성 적용
 - 시작 시 문제 해결: 이전 클러스터의 상태가 부정상으로 인해 네임노드가 시작되지 않을 때, 초기화를 통해 클러스터를 정상 상태로 복원
 
+---
+HDFS 디렉토리 생성/권한 부여
+```
+hdfs dfs -mkdir -p /tmp/hive
+hdfs dfs -mkdir -p /user/hive/warehouse
+hdfs dfs -chmod g+w /tmp
+hdfs dfs -chmod 777 /tmp/hive
+hdfs dfs -chmod g+w /user/hive
+hdfs dfs -chmod g+w /user/hive/warehouse
+```
 
 ---
 hadoop fs 명령어
@@ -154,8 +164,11 @@ hadoop fs -mkdir -p /user/taeho/hadoop_edu/test
 hadoop fs -put etc/hadoop/*.xml input
 ```
 
+
+---
 --- 
-### jps 때 datanode 실행 안될 때
+### ERROR
+jps 때 datanode 실행 안될 때
 - tmp 초기화
 <https://yeo0.tistory.com/entry/Solution-Namenode-Format-%ED%9B%84-Datanode-%EA%B0%80-%EC%8B%A4%ED%96%89%EB%90%98%EC%A7%80-%EC%95%8A%EC%9D%84-%EB%95%8C-Datanode-process-is-not-runni>
 
