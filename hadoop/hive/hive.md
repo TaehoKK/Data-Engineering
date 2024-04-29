@@ -5,7 +5,7 @@
 ```
 tar -xzvf apache-hive-3.1.3-bin.tar.gz
 ```
-#### Hive Version |	Java Version
+Hive Version |	Java Version
 - Hive 1.0 | Java 6
 - Hive 1.1 |	Java 6
 - Hive 1.2 |	Java 7
@@ -49,6 +49,26 @@ hive-site.xml 설정
 ```
 gedit /hive-site.xml
 ```
+---
+```
+# hive만 실행하고자 할 때
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+	<property>
+		<name>hive.metastore.warehouse.dir</name>
+		<value>/user/hive/warehouse</value>
+	</property>
+	<property>
+		<name>hive.cli.print.header</name>
+		<value>true</value>
+	</property>
+    		
+	
+</configuration>
+```
+---
 ```
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
@@ -78,18 +98,18 @@ gedit /hive-site.xml
 javax.jdo.option.ConnectionURL: 
 - JDBC 연결 URL을 지정합니다. 이 경우 MySQL 데이터베이스의 주소 및 포트 번호가 포함되어 있습니다.
 - createDatabaseIfNotExist=true는 데이터베이스가 없는 경우 자동으로 생성하도록 지정합니다. serverTimezone=Asia/Seoul은 서버의 시간대를 지정합니다.
-- 
+
 javax.jdo.option.ConnectionDriverName:
 - JDBC 드라이버 클래스 이름을 지정합니다. 여기서는 MySQL의 JDBC 드라이버 클래스인 com.mysql.cj.jdbc.Driver를 사용합니다.
 javax.jdo.option.ConnectionUserName:
 - 데이터베이스에 연결할 사용자 이름을 지정합니다. 이 경우 사용자 이름은 hive입니다.
-- 
+
 javax.jdo.option.ConnectionPassword:
 - 데이터베이스에 연결할 때 사용되는 비밀번호를 지정합니다. 이 경우 비밀번호는 1234입니다.
 
 ---
 
-#### hive guava 버전 확인
+hive guava 버전 확인
 ```
 >$HIVE_HOME/lib| grep guav
 
@@ -106,12 +126,12 @@ javax.jdo.option.ConnectionPassword:
 -rw-r--r-- 1 hdfs hdfs    2199  7월 29  2022 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar
 ```
 
-#### jdbc 설치
+jdbc 설치
 ```
 curl -o $HIVE_HOME/lib/mysql-connector-java-8.0.22.jar https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.22/mysql-connector-java-8.0.22.jar
 ```
 
-#### guava 교체
+guava 교체
 ```
 # guavav version 확인
 ls $HIVE_HOME/lib
@@ -133,25 +153,14 @@ $HIVE_HOME/bin/schematool -initSchema -dbType derby
 ![image](https://github.com/TaehoKK/Data-Engineering/assets/150890899/e8d0c1d6-0ca6-41cd-8a75-bb41ced21e41)
 위 처럼 나오면 성공
 
-#### hive 실행
+### hive 실행
 ```
 cd $HIVE_HOME/bin
 hive
 ```
----
-- ERROR: Name node is in safe mode
-```
-# namemode의 safemode 끄기
-hdfs dfsadmin -safemode leave
 
-# namemode의 safemode 강제로 끄기
-hdfs dfsadmin -safemode forceExit
-
-# safe mode 확인
-hdfs dfsadmin -safemode get
-```
 ---
-#### directory 생성
+### directory 생성
 ```
 >bin/hdfs dfs -mkdir -p /tmp/hive
 >bin/hdfs dfs -mkdir -p /user/hive/warehouse
@@ -163,7 +172,7 @@ hdfs dfsadmin -safemode get
 
 ```
 ---
-#### HiveQL
+### HiveQL
 ```
 # 
 > hive
@@ -183,5 +192,43 @@ INSERT INTO employ VALUES
 (3, 'Bob Johnson', 'Sales', 55000.00);
 
 SELECT emp_dept, AVG(emp_salary) AS avg_salary FROM employee GROUP BY emp_dept;
+
+```
+
+
+---
+---
+
+
+### ERROR
+hive 실행 오류
+- Name node is in safe mode
+```
+# namemode의 safemode 끄기
+hdfs dfsadmin -safemode leave
+
+# namemode의 safemode 강제로 끄기
+hdfs dfsadmin -safemode forceExit
+
+# safe mode 확인
+hdfs dfsadmin -safemode get
+```
+
+HiveQL 오류
+- FAILED: HiveException java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient
+```
+>ls $HIVE_HOME/meta*
+# 결과
+No such file or directory
+
+rm -rf $HIVE_HOME/metastore_db
+cd $HIVE_HOME
+schematool -initSchema -dbType derby
+
+# 결과
+Initialization script completed
+schemaTool completed
+
+
 
 ```
