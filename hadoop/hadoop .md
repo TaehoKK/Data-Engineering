@@ -123,6 +123,10 @@ namemode 초기화 및 HDFS 실행
 # node가 정상적으로 작동하는지 확인
 jps
 ```
+
+Hadoop cluster의 web interface port
+<localhost:9870>
+
 #### namemode를 초기화 하는 이유
 - 이전에 저장된 파일 시스템 메타데이터와 데이터 블록들을 제거
 - 새로운 클러스터 또는 구성 적용
