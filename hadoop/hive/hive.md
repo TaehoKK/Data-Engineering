@@ -203,6 +203,8 @@ SELECT emp_dept, AVG(emp_salary) AS avg_salary FROM employee GROUP BY emp_dept;
 ### ERROR
 hive 실행 오류
 - Name node is in safe mode
+
+해결: namemode safemode 끄기
 ```
 # namemode의 safemode 끄기
 hdfs dfsadmin -safemode leave
@@ -216,6 +218,8 @@ hdfs dfsadmin -safemode get
 
 HiveQL 오류
 - FAILED: HiveException java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient
+
+해결: metastore 초기화 및 schema 초기화
 ```
 >ls $HIVE_HOME/meta*
 # 결과
