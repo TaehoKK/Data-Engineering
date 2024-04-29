@@ -1,6 +1,6 @@
 ## SPARK
 
-### 환경변수 설저
+### 환경변수 설정
 ```
 getdit ~/.bashrc
 ```
@@ -27,17 +27,27 @@ export PYSPARK_DRIVER_PYTHON_OPTS='lab --allow-root'
 ```
 ---
 ### spark 실행
+
+```
+>cd spark
+>spark-shell
+```
+```
+# scala>
 var myRange = spark.range(1000).toDF("number")
 
 var divisBy2 = myRange.where("number % 2 = 0")
 
 divisBy2.show()
 
+# 2015-summary.csv 파일 읽기
+# spark 폴더로 파일 옮겨야 함
 var flightData = spark.read.option("inferSchema","true").option("header","true").csv("2015-summary.csv")
 # 2015-summary.csv 파일을 spark 폴더로 옮겨야 함.
 
 flightData.show()
 
+# view 생성
 flightData.createOrReplaceTempView("flightData")
 
 var flightData_sql=spark.sql("""
