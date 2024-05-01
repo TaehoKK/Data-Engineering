@@ -20,7 +20,7 @@ hive: <https://wikidocs.net/book/2203#google_vignette>
 - Namemode: master, Datanode: slave
 
   
-### YARM
+### YARN
 - Resource Management, Job Scheduling/Monitoring 수행
 - Resource Manager: Master Daemon에서 구동, 클러스터들로의 자원 할당을 관리
 - Node Manager: Slave Daemon에서 구동, 각 단일 노드의 Task 실행
