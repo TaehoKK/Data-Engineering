@@ -82,3 +82,12 @@ ex) ls -l t\* 는 t*라는 이름을 가진 파일의 상세 정보를 출력.
  
 >, <, >> : 입출력의 방향을 바꾸는 특수문자.
 ```
+```
+# hostname 확인
+>hostname
+
+# hostname 정보
+>hostnamectl
+
+# hostname 변경
+>sudo hostnamectl set-hostname master01
