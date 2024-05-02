@@ -7,12 +7,12 @@ virtualenv 3.9.10 airflow1
 
 ### 설치
 ```
-pip install apache-airflow
+>pip install apache-airflow
 ```
 
 ### airflow 초기화
 ```
-airflow db init
+>airflow db init
 # 결과로 ls ~/.airflow 디렉토리가 생성되어야함
 
 # 만약 실패했을 경우
@@ -88,3 +88,10 @@ gedit airflow/airflow.cfg
 sql_alchemy_conn = mysql://root:root@localhost:3306/airflow
 ```
 
+```
+>airflow db init
+
+# 만약 ModuleNotFoundError: No module named 'MySQLdb' 가 나오면
+>pip install mysqlclient
+
+```
