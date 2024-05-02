@@ -67,4 +67,24 @@ gedit ~/airflow/airflow.cfg
 # load_examples = True에서 False로 바꾸기
 # 안사라졌으면 껐다 키기
 ```
+--- 
+## mysql 연동
+```
+# mysql 실행
+>mysql -u root -p
+
+# database 생성
+create database airflow;
+
+# root유저에 airflowDB권한 부여하기
+grant all privileges on airflow.* to 'root'@'localhost';
+```
+
+airflow.cfg 설정
+```
+gedit airflow/airflow.cfg
+```
+```
+sql_alchemy_conn = mysql://root:root@localhost:3306/airflow
+```
 
