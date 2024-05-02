@@ -47,7 +47,7 @@ echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 ```
 pyenv install 3.9.10
 ```
-#### 만약 install이 안될 
+#### 만약 install이 안될 때
 ```
 # C컴파일러 설치
 sudo dnf install gcc
@@ -78,4 +78,9 @@ pyenv uninstall airflow1
 pyenv virtualenv-delete airflow1
 ```
 
+만약 터미널을 실행할 이런 문구가 나오면 ssh lcoalhost 실행
+```
+bash: pyenv: command not found...
+bash: pyenv: command not found...
+```
 
