@@ -23,8 +23,35 @@ export PYSPARK_DRIVER_PYTHON_OPTS='lab --allow-root'
 $SPARK_HOME/bin
 ```
 
+#### jupyter lab install
+jupyter notebook으로 pyspark 열기
+```
+gedit ~/.bashrc
+```
+```
+export PYSPARK_PYTHON=python3
+export PYSPARK_DRIVER_PYTHON=jupyter
+export PYSPARK_DRIVER_PYTHON_OPTS='lab --allow-root'
+
+export PYSPARK_PYTHON=python3
+export PYSPARK_DRIVER_PYTHON=jupyter
+export PYSPARK_DRIVER_PYTHON_OPTS='lab --allow-root'
+```
+```
+source ~/.bashrc
+```
+```
+pip install jupyterlab
+# pip install -y python3-pip
+```
+```
+pyspark
+# jupyter lab이 열림
+```
+
 #### spark 모니터링
 <localhost:4040>
 - 하나의 노드에 여러개의 컨텍스트가 실행되면 포트번호가 1씩 증가하면서 생성
 - 4041, 4042, ...
+
 
