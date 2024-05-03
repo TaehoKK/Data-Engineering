@@ -44,7 +44,7 @@ airflow users create \
 
 
 ex)
-airflow users create \
+>airflow users create \
 --username asdf \
 --firstname K \
 --lastname TH \
@@ -52,8 +52,21 @@ airflow users create \
 --password 1234 \
 --email asdf@example.com
 
-```
+# user 확인
+>airflow users list
 
+# 비밀번호 변경
+>airflow users update --username your_username --password new_password
+
+
+```
+### standalone 실행
+```
+# 개발용으로 실행
+# webserver, scheduler, metadata
+airflow standalone
+
+```
 ### webserver 실행
 ```
 # 둘 중 하나 실행
@@ -72,11 +85,11 @@ airflow scheduler
 
 ### example DAG 제거
 ```
-gedit ~/airflow/airflow.cfg
-```
-```
-# load_examples = True에서 False로 바꾸기
-# 안사라졌으면 껐다 키기
+>gedit ~/airflow/airflow.cfg
+
+# True를 False로 바꾸기
+load_examples = False
+
 ```
 --- 
 ---
@@ -98,9 +111,8 @@ SELECT Host, User, authentication_string FROM user;
 
 airflow.cfg 설정
 ```
-gedit airflow/airflow.cfg
-```
-```
+>gedit airflow/airflow.cfg
+
 sql_alchemy_conn = mysql://root:root@localhost:3306/airflow
 ```
 
