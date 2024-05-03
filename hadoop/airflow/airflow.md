@@ -3,6 +3,7 @@
 ### 가상환경 설정
 ```
 virtualenv 3.9.10 airflow1
+pyenv activate airflow1
 ```
 
 ### 설치
@@ -19,6 +20,16 @@ virtualenv 3.9.10 airflow1
 pip install kubernetes
 pip install apache-airflow[cncf.kubernetes]
 ```
+
+### 환경변수 설정
+```
+>gedit ~/.bashrc
+
+export AIRFLOW_HOME=/root/airflow
+
+>source ~/.bashrc
+```
+
 
 ### 유저 계정 생성
 
@@ -155,14 +166,6 @@ task_start >> test_task
 cd /etc/systemd/system
 sudo nano airflow-webserver.service
 ```
-[Service]
-Environment="PATH=/home/root/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-User=root
-Group=root
-Type=simple
-ExecStart=/home/root/.local/bin/airflow webserver -p 8080
-Restart=on-failure
-RestartSec=5s
-PrivateTmp=true
+
 ```
-<https://spidyweb.tistory.com/349>
+
