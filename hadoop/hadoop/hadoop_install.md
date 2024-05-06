@@ -15,41 +15,55 @@
 - <https://cwiki.apache.org/confluence/display/HADOOP/Hadoop+Java+Versions> 
 
 ---
+
 ### 환경변수 설정
 - JAVA_HOME: java가 설치된 디렉토리의 경로를 지정
 - HADOOP_HOME: hadoop이 설치된 디렉토리의 경로를 지정
 - $PATH: 어디서든 실행할 수 있는 디렉토리의 경로를 지정
 
 ```
->gedit ~/.bashrc
-```
-```
+$gedit ~/.bashrc
+
 export JAVA_HOME=/root/jdk-11.0.21
 export HADOOP_HOME=/root/hadoop
-export PATH=$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
+export PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
+
+$source ~/.bashrc
 ```
+
+### 호스트 명 설정
 ```
->source ~/.bashrc
+$vi /etc/hosts
 ```
+
+### ssh 설정
+- namemode와 datanode간 접속 id/pw 스킵
+- ssh localhost로 접속할 때 password skip
+```
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+chmod 0600 ~/.ssh/authorized_keys
+```
+---
 
 
 ---
 ### hadoop 환경변수 설정
 
 hadoop-env.sh
+- hadoop 환경변수 설정 파일
 - hadoop의 디렉토리 경로를 설정
-- JAVA_HOME: Hadoop이 Java를 실행할 때 사용할 Java 홈 디렉토리를 지정
+- JAVA_HOME: Hadoop이 Java를 실행할 때 사용할 Java 홈 디렉토리를 지정 (hadoop 3.x부터 설정 필요없음)
 - HADOOP_HOME: Hadoop이 설치된 디렉토리의 경로를 지정
 - HADOOP_CONF_DIR: Hadoop 구성 파일이 위치한 디렉토리의 경로를 지정
 ```
->gedit hadoop-3.3.6/etc/hadoop/hadoop-env.sh
-```
-```
+$gedit hadoop-3.3.6/etc/hadoop/hadoop-env.sh
+
 export JAVA_HOME=/root/jdk-11.0.21
 export HADOOP_HOME=/root/hadoop
 export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
 
-# 사용자 지정 환경변수
+- 사용자 지정 환경변수
 export HDFS_NAMENODE_USER=root
 export HDFS_DATANODE_USER=root
 export HDFS_SECONDARYNAMENODE_USER=root
@@ -69,22 +83,34 @@ export HADOOP_OPTS="-Djava.library.path=${HADOOP_HOME}/lib/native"
 core-site.xml
 - fs.defaultFS: Hadoop의 기본 파일 시스템을 설정
 - HDFS의 기본 주소를 <localhost:9000>로 설정
+- 이외
+  - hadoop.tmp.dir : 임시 디렉토리 설정 (모든 노드에 설정)
+  - fs.trash.interval : 휴지통에 보관할 시간, 디폴트 0분 (namemode에 설정) 
+  - fs.trash.checkpoint.interval : 휴지통 비우는 시간, 디폴트 0분 (namemode에 설정)
 ```
->gedit ./hadoop-3.3.6/etc/hadoop/core-site.xml
-```
-```
+$gedit ./hadoop-3.3.6/etc/hadoop/core-site.xml
+
 <configuration>
     <property>
         <name>fs.defaultFS</name>
         <value>hdfs://localhost:9000</value>
     </property>
 </configuration>
+
 ```
 
 ---
 hdfs-site.xml
-- dfs.replication: 파일을 HDFS에 저장할 때의 복제 수를 설정
-- 1로 설정되어 있어서 파일을 한 번만 저장하고 복제하지 않음을 의미
+- 주요 속성
+  - dfs.replicastion : 복제 수
+  - dfs.namemode.name.dir : fsimage가 저장될 경로 (namemode에 설정)
+  - dfs.namemode.edits.dir : edits(에디트 로그)가 저장될 경로 (namemode에 설정)
+  - dfs.datanode.data.dir : 데이터 파일이 저장될 경로 (datanode에 설정)
+  - dfs.namemode.checkpoint.dir : fsimage, edits 사본이 저장될 경로 (secondary namemode에 설정)
+  - dfs.namemode.secondary.http-address : 보조네임노드 주소와 포트번호 지정, 디폴트는 0.0.0.0:50090 (namemode에 설정)
+ 
+- 이외
+  - dfs.hosts & dfs.hosts.exclude : 노드를 추가허간 제거할 때 사용하는 파일 (추가 할 호스트 또는 제거 할 호스트의 이름을 지정)의 경로, 절대경로로 지정 (namemode에 설정)
 
 ```
 gedit ./hadoop-3.3.6/etc/hadoop/hdfs-site.xml
@@ -98,6 +124,11 @@ gedit ./hadoop-3.3.6/etc/hadoop/hdfs-site.xml
 </configuration>
 ```
 
+### datanode의 호스트 이름을 기록하는 파일
+```
+$ gedit $HADOOP_HOME/etc/hadoop/workers
+```
+
 --- 
 ### hadoop 실행
 자신의 lcoalhost에 ssh(secure shell)연결
@@ -108,20 +139,29 @@ gedit ./hadoop-3.3.6/etc/hadoop/hdfs-site.xml
 >exit 
 ```
 
----
-password skip
-- ssh localhost로 접속할 때 password skip
-```
-ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
-cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-chmod 0600 ~/.ssh/authorized_keys
-```
----
 namemode 초기화 및 HDFS 실행
+- fsimage가 초기화
+- 기존 data block은 삭제 안됨
 ```
 ./hadoop/bin/hdfs namenode -format
-./hadoop/sbin/start-dfs.sh
-# 잘 안되면 start-all.sh 실행
+
+
+# 만약 datanode가 안나오면 /tmp/hadoop-root/dfs/data 삭제
+# namemode를 초기화하면 새로운 block pool id 생성하기 때문에 두 번 포멧하면 오류 발생
+
+
+# 여기에 fisimge 파일 2개가 만들어지면 정상적인 format 완료
+cd $HADOOP_HOME
+ls /tmp/hadoop-root/dfs/name/current/
+
+# 결과:
+VERSION                      fsimage_0000000000000000000.md5
+fsimage_0000000000000000000  seen_txid
+```
+
+node 실행
+```
+start-dfs.sh
 
 # node가 정상적으로 작동하는지 확인
 jps
@@ -167,8 +207,18 @@ hadoop fs -put etc/hadoop/*.xml input
 
 ---
 --- 
-### ERROR
-jps 때 datanode 실행 안될 때
-- tmp 초기화
-<https://yeo0.tistory.com/entry/Solution-Namenode-Format-%ED%9B%84-Datanode-%EA%B0%80-%EC%8B%A4%ED%96%89%EB%90%98%EC%A7%80-%EC%95%8A%EC%9D%84-%EB%95%8C-Datanode-process-is-not-runni>
+### 추가
 
+로그 디렉토리
+- cat $HADOOP_HOME/logs/hadoop-사용자-노드구분-호스트명.log 확인
+
+네임노드의 fsimage 위치
+- /tmp/hadoop-사용자명/dfs/name
+
+데이터 위치
+- /tmp/hadoop-사용자명/dfs/data
+  
+
+
+보조네임노드의 fsimage 사본이 저장되는 디렉토리
+- /tmp/hadoop-사용자명/dfs/namesecondary
