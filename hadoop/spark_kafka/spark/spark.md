@@ -6,12 +6,12 @@
 ### 환경변수 설정
 
 ```
-cd spark
+cd spark/conf
 cp spark-env.sh.template spark-env.sh
 gedit spark-env.sh
 
 export SPARK_DIST_CLASSPATH=$(~/hadoop-3.3.6/bin/hadoop classpath)
-export JAVA_HOME=~/jdk.1.8.0
+export JAVA_HOME=~/jdk1.8.0
 
 # spakr 실행시 로그 레벨 설정 (필수 아님)
 # FATAL, ERROR, WARN, INFO, DEBIG. TRACE 순서
