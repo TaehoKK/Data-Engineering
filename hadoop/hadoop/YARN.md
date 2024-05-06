@@ -1,8 +1,14 @@
 ### yarn 파일 수정
+- 주요 속성
+  - yarn.resourcenamager.hostname : resourcemanager 노드에 설정
+  - yanr.nodemanager.hostname : nodemanager 노드에 설정
+  - tarn.nodemanager.aux-services : nodemanager 호스트를 별도로 운영할 경우 지정
+  - yarn.nodenamager.aux-serviceces.mapreduce_shufflw.class : 지정하지 않아도 됨
+ 
+    
 ```
 >hadoop/etc/hadoop/yarn-site.xml
-```
-```
+
 <configuration>
     <property>
         <name>yarn.nodemanager.aux-services</name>
