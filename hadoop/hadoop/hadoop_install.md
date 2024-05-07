@@ -14,6 +14,13 @@
 - 이유: hadoop 3.4버전이 java 8 and 11를 지원한다.
 - <https://cwiki.apache.org/confluence/display/HADOOP/Hadoop+Java+Versions> 
 
+###
+```
+$ sudo dnf install openssh
+$ sudo dnf install pdsh
+
+```
+
 ---
 
 ### 환경변수 설정
@@ -40,9 +47,9 @@ $vi /etc/hosts
 - namemode와 datanode간 접속 id/pw 스킵
 - ssh localhost로 접속할 때 password skip
 ```
-ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
-cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-chmod 0600 ~/.ssh/authorized_keys
+$ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+$ chmod 0600 ~/.ssh/authorized_keys
 ```
 ---
 
@@ -70,7 +77,7 @@ export HDFS_SECONDARYNAMENODE_USER=root
 export YARN_RESOURCEMANAGER_USER=root
 export YARN_NODEMANAGER_USER=root
 
-# 각 디렉토리 설정
+- 각 디렉토리 설정
 export HADOOP_COMMON_HOME=${HADOOP_HOME}
 export HADOOP_MAPRED_HOME=${HADOOP_HOME}
 export HADOOP_HDFS_HOME=${HADOOP_HOME}
