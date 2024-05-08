@@ -22,3 +22,6 @@ dnf group install "Workstation"
 systemctl set-default graphical
 ```
 
+linux 네트워크 설정
+<https://whitewing4139.tistory.com/258>
+
