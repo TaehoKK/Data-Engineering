@@ -1,4 +1,6 @@
-### jupyter notebook 가상환경에서 실
+### jupyter notebook 가상환경에서 실행
+
+
 anaconda prompt 실행
 
 가상환경 리스트 확인
