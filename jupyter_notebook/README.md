@@ -51,3 +51,20 @@ jupyter notebook
 
 원하는 파일을 열고 kernel 탭에서 change kernel
 
+
+### jupyter 테마 변경
+
+```
+- 터미널
+conda install -c conda-forge jupyter_nbextensions_configurator
+```
+
+문법 강조 기능
+```
+!pip install jupyter_nbextensions_configurator jupyter_contrib_nbextensions
+
+!jupyter contrib nbextension install --user​
+
+!jupyter nbextensions_configurator enable --user
+```
+
