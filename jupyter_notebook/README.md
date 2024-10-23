@@ -41,7 +41,7 @@ kernel 연결 및 해제
 python -m ipykernel install --user --name 가상환경이름 --display-name "커널출력이름"
 - 커널출력이름은 jupyter notebook에서 보이게 될 이름
 
-jupyter kernelspec uninstall 가상환경이름
+jupyter kernelspec uninstall "커널이름"
 ```
 
 kernel list 확인
